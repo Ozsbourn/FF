@@ -226,7 +226,7 @@ namespace FF {
     }
 
     /**
-     * @brief []
+     * @brief [Method that set impulse force (i, j) particle from PARTICLE_BUFFER]
      * @details [-]
      * 
      * @@param row [Row in PARTICLE_BUFFER]
@@ -264,7 +264,7 @@ namespace FF {
     }
 
     /**
-     * @brief []
+     * @brief [Method that set constant force (i, j) particle from PARTICLE_BUFFER]
      * @details [-]
      * 
      * @param row [Row in PARTICLE_BUFFER]
@@ -338,11 +338,12 @@ namespace FF {
     }
 
     /**
-     * @brief []
-     * @details []
+     * @brief [Method update states from each particle from PARTICLE_BUFFER]
+     * @details [-]
      * 
-     * @param changeInTime []
-     * @return []
+     * @param changeInTime [Frame of time that need to recalculate states]
+     * @tparam T [Generic type]
+     * @return [-]
      */
     template<typename T>
     inline bool FF::Cloth<T>::Update(const T changeInTime){
@@ -384,11 +385,6 @@ namespace FF {
             }
         }
 
-        //
-        /* This is cheating. Spring-particle systems are notoriously
-        unstable. To make this behave more like cloth, dampen the 
-        movement of the particles in the system.*/
-        //
         FF::Vector3<T> dampening;
         for (i = 0x0;i < this->m_TotalRows; i++) {
             for (j = 0x0; j < this->m_TotalColumns; j++) {
@@ -419,7 +415,7 @@ namespace FF {
         bool RenderStatus = true;
 
         for (std::size_t i = 0x0; RenderStatus && i < this->m_TotalRows; i++) {
-            for (int j=0; RenderStatus && j < this->m_TotalColumns; j++) {
+            for (std::size_t  j = 0x0; RenderStatus && j < this->m_TotalColumns; j++) {
                 RenderStatus = this->m_Particles[i][j].Render();
             }
         }
