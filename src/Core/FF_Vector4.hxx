@@ -1,5 +1,4 @@
 #include <cmath>
-#include <cassert>
 #include <iostream>
 
 #include "FF_Macros.hxx"
@@ -9,6 +8,13 @@
 #define FF_VECTOR4_HXX_
 
 namespace FF {
+	/**
+	 * @brief [Class that represent four-dimensional vector]
+	 * @details [Four-dimensional vector have a two components, that describe X and Y components,
+	 * 			  and is used to describe something in 3D and 4D spaces]
+	 * 
+	 * @tparam T [Generic type]
+	 */
 	template<typename T>
 	class Vector4 {
 	private:
@@ -17,63 +23,296 @@ namespace FF {
 		T m_z;
 		T m_w;
 	public:
+		/**
+		 * @brief [Default constructor are not defined to all entities in FF]
+		 */
 		explicit Vector4(void) = delete;
 
+		/**
+		 * @brief [Constuctor with the parameters that have init VEC2 with scalar values for components]
+		 * 
+		 * @param x [X component]
+		 * @param y [Y component]
+		 */
 		explicit Vector4( T __FF_IN x = static_cast<T>(0.0f), 
 						  T __FF_IN y = static_cast<T>(0.0f),
 						  T __FF_IN z = static_cast<T>(0.0f),
 						  T __FF_IN w = static_cast<T>(0.0f) )
 		: m_x(x), m_y(y), m_z(z), m_w(w) {};
 
+		/**
+		 * @brief [Copy constructor to VEC4]
+		 * @details [Copy each component of VEC to this vector]
+		 * 
+		 * @param vec [Vector]
+		 */
 		explicit Vector4(FF::Vector4<T>& __FF_IN vec);
 
+
+		/**
+		 * @brief [Method that set X component of vector]
+		 * 
+		 * @param x [Value of X component]
+		 */
 		inline void SetXComponent(T __FF_IN x);
+
+		/**
+		 * @brief [Method that set Y component of vector]
+		 * 
+		 * @param x [Value of Y component]
+		 */
 		inline void SetYComponent(T __FF_IN y);
+
+		/**
+		 * @brief [Method that set Z component of vector]
+		 * 
+		 * @param x [Value of Z component]
+		 */
 		inline void SetZComponent(T __FF_IN z);
+
+		/**
+		 * @brief [Method that set W component of vector]
+		 * 
+		 * @param x [Value of W component]
+		 */
 		inline void SetWComponent(T __FF_IN w);
 
+
+
+		/**
+		 * @brief [Method that get X component of vector]
+		 * @details [Const method]
+		 * 
+		 * @param y [Value of X component]
+		 */
 		const inline T& GetXComponent(void) const;
+
+		/**
+		 * @brief [Method that get Y component of vector]
+		 * @details [Const method]
+		 * 
+		 * @param y [Value of Y component]
+		 */
 		const inline T& GetYComponent(void) const;
+
+		/**
+		 * @brief [Method that get Z component of vector]
+		 * @details [Const method]
+		 * 
+		 * @param y [Value of Z component]
+		 */
 		const inline T& GetZComponent(void) const;
+
+		/**
+		 * @brief [Method that get W component of vector]
+		 * @details [Const method]
+		 * 
+		 * @param y [Value of W component]
+		 */
 		const inline T& GetWComponent(void) const;
 
+
+		/**
+		 * @brief [Friend function that return -vec]
+		 * @details [Apply '-' to each component]
+		 * 
+		 * @param vec [Vector]
+		 * @tparam U [Generic type]
+		 * @return [Return vector that represent origin vector with other sign]
+		 */
 		template<typename U>
 		friend FF::Vector4<U> operator-(const FF::Vector4<U>& __FF_IN vec);
+
+		/**
+		 * @brief [Friend function that calculate difference of two vecs]
+		 * @details [Each component is difference of appropriate components of parameter vectors]
+		 * 
+		 * @param vec1 [First vector]
+		 * @param vec2 [Second vector]
+		 * @tparam U [Generic type]
+		 * @return [Return vectors that represent difference of two vectors]
+		 */
 		template<typename U>
 		friend FF::Vector4<U> operator-(const FF::Vector4<U>& __FF_IN vec1, const FF::Vector4<U>& __FF_IN vec2);
+
+		/**
+		 * @brief [Friend function that calculate sum of two vector]
+		 * @details [Each component is sum of appropriate components origin vectors]
+		 * 
+		 * @param vec [Vector]
+		 * @tparam U [Generic type]
+		 * @return [Return vector that represent sum of origin vectors]
+		 */
 		template<typename U>
 		friend FF::Vector4<U> operator+(const FF::Vector4<U>& __FF_IN vec1, const FF::Vector4<U>& __FF_IN vec2);
+
+		/**
+		 * @brief [Friend function that calculate composition vec and scalar value]
+		 * @details [Each component mul to scalar]
+		 * 
+		 * @param vec [Vector]
+		 * @tparam U [Generic type]
+		 * @return [Return vector that represent mul of origin vector and scalar value]
+		 */
 		template<typename U>
 		friend FF::Vector4<U> operator*(const FF::Vector4<U>& __FF_IN vec,  const U& __FF_IN scalar);
+
+		/**
+		 * @brief [Friend function that calculate division vector and scalar value]
+		 * @details [Each component divide to scalar]
+		 * 
+		 * @param vec [Vector]
+		 * @tparam U [Generic type]
+		 * @return [Return vector that represent div of origin vector and scalar value]
+		 */
 		template<typename U>
 		friend FF::Vector4<U> operator/(const FF::Vector4<U>& __FF_IN vec,  const U& __FF_IN scalar);
 
+
+		/**
+		 * @brief [Operator that calculate dif with this vector and parameter vector]
+		 * @details [-]
+		 * 
+		 * @param vec [Vector]
+		 */
+		inline void operator-=(const FF::Vector4<T>& __FF_IN vec);
+		
+		/**
+		 * @brief [Operator that calculate sum with this vector and parameter vector]
+		 * @details [-]
+		 * 
+		 * @param vec [Vector]
+		 */
+		inline void operator+=(const FF::Vector4<T>& __FF_IN vec);
+
+
+		/**
+		 * @brief [Operator that calculate difference of this vector and scalar]
+		 * @details [-]
+		 * 
+		 * @param scalar [Scalar value]
+		 */
 		inline void operator-=(const T& __FF_IN scalar);
+
+		/**
+		 * @brief [Operator that calculate sum of this vector and scalar]
+		 * @details [-]
+		 * 
+		 * @param scalar [Scalar value]
+		 */
 		inline void operator+=(const T& __FF_IN scalar);
+
+		/**
+		 * @brief [Operator that calculate mul of this vector and scalar]
+		 * @details [-]
+		 * 
+		 * @param scalar [Scalar value]
+		 */
 		inline void operator*=(const T& __FF_IN scalar);
+
+		/**
+		 * @brief [Operator that calculate div of this vector and scalar]
+		 * @details [-]
+		 * 
+		 * @param scalar [Scalar value]
+		 */
 		inline void operator/=(const T& __FF_IN scalar);
 
+		/**
+		 	* @brief [Method that return component of vector such as lvalue]
+		 	* @details [-]
+		 	* 
+		 	* @param index [Index of component vector]
+		 	* @return [Return component like a lvalue]
+		 	*/
 		const T& operator[](std::size_t __FF_IN index);
 
+
+		/**
+		 * @brief [Friend function that calculate dot product of two vectors]
+		 * @details [Dot product is sum of all mul appropriate components]
+		 * 
+		 * @param vec1 [First vector]
+		 * @param vec2 [Second vector]
+		 * @tparam U [Generic type]
+		 * @return [Return value that represent result of dot product]
+		 */
 		template<typename U>
 		friend inline U     	 	  DotProduct(const FF::Vector4<U>& __FF_IN vec1, const FF::Vector4<U>& __FF_IN vec2);
-		/*template<typename U>
-		friend inline FF::Vector4<U>& CrossProduct(const FF::Vector4<U>& __FF_IN vec1, const FF::Vector4<U>& __FF_IN vec2);*/
 
+
+		/**
+		 * @brief [Method that find project vector VEC1 on vector VEC2]
+		 * @details [Method calculate vector project VEC1 on VEC2]
+		 * 
+		 * @param vec1 [First vector]
+		 * @param vec2 [Second vector]
+		 * @tparam T [Generic type]
+		 * @return [Return the project of vector]
+		 */
 		template<typename U>
 		friend inline FF::Vector4<U>& Project(const FF::Vector4<U>& __FF_IN vec1, const FF::Vector4<U>& __FF_IN vec2);
-		template<typename U>
-		friend inline FF::Vector4<U>& Reject(const FF::Vector4<U>& __FF_IN vec1,  const FF::Vector4<U>& __FF_IN vec2);
 
+		/**
+		 * @brief [Method that find reject vectors VEC1 and VEC2]
+		 * @details [Method calculate reject vector VEC1 from VEC2]
+		 * 
+		 * @param vec1 [First vector]
+		 * @param vec2 [Second vector]
+		 * @tparam T [Generic type]
+		 * @return [Return reject of vectors]
+		 */
+		template<typename U>
+		friend inline FF::Vector4<U>& Reject(const  FF::Vector4<U>& __FF_IN vec1, const FF::Vector4<U>& __FF_IN vec2);
+
+
+		/**
+		 * @brief [Method that calculate magnitude of vector]
+		 * @details [Method find and return square root of sum of squares of each component of vector]
+		 * 
+		 * @param vec [Vector]
+		 * @tparam T [Generic type]
+		 * @return [Return the magnitude of vector]
+		 */
 		template<typename U>
 		friend inline U           	  Magnitude(const FF::Vector4<U>& __FF_IN vec);
+
+		/**
+		 * @brief [Method that find square of magnitude of vector]
+		 * @details [Method find and return sum of squares of each component of vector]
+		 * 
+		 * @param vec [Vector]
+		 * @tparam T [Generic type]
+		 * @return [Return sqaured magnitude of vector]
+		 */
 		template<typename U>
 		friend inline U   	      	  SquaredMagnitude(const FF::Vector4<U>& __FF_IN vec);
+
+		/**
+	 	 * @brief [Method that that instance the origin vector after normalize]
+	 	 * @details [Method normalize a vector: subdivide each component on magnitude of this vector]
+	 	 * 
+	 	 * @param vec [Vector]
+	 	 * @tparam T [Generic type]
+	 	 * @return [Return the copy of origin vector that was normalize]
+	 	 */
 		template<typename U>
 		friend inline FF::Vector4<U>& Normalize(const FF::Vector4<U>& __FF_IN vec);
 
+
+		/**
+		 * @brief [Default destructor]
+		 */
 		~Vector4(void) = default;
 
+
+		/**
+		 * @brief [Debug override << operator]
+		 * @details [Used for output values in ostream. Friend function]
+		 * 
+		 * @param out [Out stream]
+		 * @param vec [Vector]
+		 */
 		template<typename U>
 		friend inline std::ostream& operator<< (std::ostream& __FF_IN out, Vector4<T>& __FF_IN vec);
 	};
@@ -128,7 +367,10 @@ namespace FF {
 
 	template<typename T>
 	FF::Vector4<T> operator-(const FF::Vector4<T>& __FF_IN vec){
-		return FF::Vector4<T>(-vec.m_x, -vec.m_y, -vec.m_z, -vec.m_w);
+		return FF::Vector4<T>( -vec.m_x, 
+			                   -vec.m_y, 
+			                   -vec.m_z, 
+			                   -vec.m_w);
 	}
 
 	template<typename T>
@@ -161,6 +403,22 @@ namespace FF {
 					 		   vec.m_y / scalar,
 					 		   vec.m_z / scalar,
 					 		   vec.m_w / scalar );
+	}
+
+	template<typename T>
+	inline void operator-=(const FF::Vector4<T>& __FF_IN vec){
+		this->m_x -= vec.GetXComponent();
+		this->m_y -= vec.GetYComponent();
+		this->m_z -= vec.GetZComponent();
+		this->m_w -= vec.GetWComponent();
+	}
+		
+	template<typename T>
+	inline void operator+=(const FF::Vector4<T>& __FF_IN vec){
+		this->m_x += vec.GetXComponent();
+		this->m_y += vec.GetYComponent();
+		this->m_z += vec.GetZComponent();
+		this->m_w += vec.GetWComponent();
 	}
 
 	template<typename T>
@@ -237,7 +495,6 @@ namespace FF {
 		return (vec / Magnitude(vec));
 	}
 
-	// debug
 	template<typename T>
 	std::ostream& operator<< (std::ostream& __FF_IN out, Vector4<T>& __FF_IN vec){
 		std::cout << "{" << vec.m_x << ", " << vec.m_y << "," << vec.m_z << "," << vec.m_w << "}" << std::endl;

@@ -4,20 +4,56 @@
 #define FF_MACROS_HXX_
 
 namespace FF {
-	#define __FF_IN  
-	#define __FF_OUT 
+    /**
+     * @brief [Input parameter macro]
+     * @details [A macro showing that the parameter of the function or method before which it is written is an input]
+     */
+    #define __FF_IN  
+    /**
+     * @brief [Output parameter macro]
+     * @details [A macro showing that the parameter of the function or method before which it is written is an output]
+     */
+    #define __FF_OUT 
 
-	#ifdef __FF_DEBUG
-		#define FF_ASSERT(CONDITION) 						assert(CONDITION)
-		#define FF_ASSERT_MESSAGE(CONDITION, ERROR_MESSAGE) assert(CONDITION && ERROR_MESSAGE)
+    /**
+     * @brief [Debug macro]
+     * @details [Debug macro define the ASSERTs and VERIFY macros that expanding to appropriate functions or condition]
+     */
+    #ifdef __FF_DEBUG
+        /**
+        * @brief [Assert macro]
+        * @details [In debug expanding to assert without message]
+        */
+        #define FF_ASSERT(CONDITION)                        assert(CONDITION)
+        /**
+        * @brief [Assert with message macro]
+        * @details [In debug expanding to assert with message]
+        */
+        #define FF_ASSERT_MESSAGE(CONDITION, ERROR_MESSAGE) assert(CONDITION && ERROR_MESSAGE)
 
-		#define FF_VERIFY(CONDITION)						assert(CONDITION)
-	#else
-		#define FF_ASSERT(CONDITION) 
-		#define FF_ASSERT_MESSAGE(CONDITION, ERROR_MESSAGE) 
+        /**
+        * @brief [Verify macro]
+        * @details [In debug expanding to assert without message]
+        */
+        #define FF_VERIFY(CONDITION)                        assert(CONDITION)
+    #else
+        /**
+        * @brief [Assert macro]
+        * @details [In release expanding to assert without message]
+        */
+        #define FF_ASSERT(CONDITION) 
+        /**
+        * @brief [Assert with message macro]
+        * @details [In release expanding to assert with message]
+        */
+        #define FF_ASSERT_MESSAGE(CONDITION, ERROR_MESSAGE) 
 
-		#define FF_VERIFY(CONDITION)						(CONDITION)
-	#endif
+        /**
+        * @brief [Verify macro]
+        * @details [In release expanding to condition]
+        */
+        #define FF_VERIFY(CONDITION)                        (CONDITION)
+    #endif
 };
 
 #endif // FF_MACROS_HXX_

@@ -1,3 +1,5 @@
+#include "FF_Macros.hxx"
+
 #include "FF_Vector3.hxx"
 #include "FF_Vector4.hxx"
 
@@ -7,6 +9,11 @@
 #define FF_QUATERNION_HXX_
 
 namespace FF {
+	/**
+	 * @brief [Class that represent quaternion entity]
+	 * 
+	 * @tparam T [Generic type]
+	 */
 	template<typename T>
 	class Quaternion {
 	private:
@@ -15,33 +22,91 @@ namespace FF {
 		T m_z;
 		T m_w;
 	public:
+		/**
+		 * @brief [Default constructor]
+		 * @details [Default constructor aren't defined in FF]
+		 */
 		explicit Quaternion(void) = delete;
 
-		explicit Quaternion( T x = static_cast<T>(0.0f),
-				 T y = static_cast<T>(0.0f),
-				 T z = static_cast<T>(0.0f),
-				 T w = static_cast<T>(0.0f) )
-		: m_x(x), m_y(y), m_y(z), m_y(w) {}
+		/**
+		 * @brief [Constructor with parameters]
+		 * @details [Set all components in appropriate with scalar values]
+		 * 
+		 * @param x [X component]
+		 * @param y [Y component]
+		 * @param y [Z component]
+		 * @param w [W component]
+		 */
+		explicit Quaternion( T __FF_IN x = static_cast<T>(0.0f),
+				             T __FF_IN y = static_cast<T>(0.0f),
+				             T __FF_IN z = static_cast<T>(0.0f),
+				             T __FF_IN w = static_cast<T>(0.0f) )
+		: m_x(x), 
+		  m_y(y), 
+		  m_y(z), 
+		  m_y(w) {}
 
-		explicit Quaternion( FF::Vector3<T>& vec,
-				 T 		  scalar );
+		/**
+		 * @brief [Constructor with parameters]
+		 * @details [Set all components in appropriate with vec components and scalar values]
+		 * 
+		 * @param vec [Vector]
+		 * @param scalar [Scalar value]
+		 */
+		explicit Quaternion( FF::Vector3<T>& __FF_IN vec,
+				             T               __FF_IN scalar );
 
-		explicit Quaternion( FF::Vector4<T>& vec );
+		/**
+		 * @brief [Constructor with parameters]
+		 * @details [Set all components in appropriate with vec components]
+		 * 
+		 * @param vec [Vector]
+		 */
+		explicit Quaternion( FF::Vector4<T>& __FF_IN vec );
 
+		/**
+		 * @brief [Overloaded operator '*']
+		 * @details [Define mul operation to quaternion]
+		 * 
+		 * @param quat1 [First quaternion]
+		 * @param quat2 [Second quaternion]
+		 * @tparam U [Generic type]
+		 * @return [Return instance of quaternion that represent mul of origin quaternions]
+		 */
 		template<typename U>
-		friend inline FF::Quaternion<U> operator*(const FF::Quaternion<U>& quat1, const FF::Quaternion<U>& quat2);
+		friend inline FF::Quaternion<U> operator*(const FF::Quaternion<U>& __FF_IN quat1, const FF::Quaternion<U>& __FF_IN quat2);
 
+		/**
+		 * @brief [Method that get vector part of quaternion]
+		 * @details [X, Y and Z components are vector part]
+		 * @return [Return VEC3 with X, Y and Z components from origin quaternion]
+		 */
 		inline const FF::Vector3<T>& GetVectorPart(void) const;
 
+		/**
+		 * @brief [Method that get rotation matrix by quaternion]
+		 * @details [Const method]
+		 * @return [Return rotation MAT3]
+		 */
 		inline FF::Matrix3x3<T>& GetRotationMatrix(void) const;
-		inline void 			 SetRotationMatrix(FF::Matrix3x3<T>& matrix);
 
+		/**
+		 * @brief [Method that set rotation matrix]
+		 * @details [-]
+		 * 
+		 * @param matrix [Matrix]
+		 */
+		inline void 			 SetRotationMatrix(FF::Matrix3x3<T>& __FF_OUT matrix);
+
+		/**
+		 * @brief [Default destructor]
+		 */
 		~Quaternion(void) = default;
 	};
 
 	template<typename T>
 	FF::Quaternion<T>::Quaternion( FF::Vector3<T>& vec,
-				 		 T 		  scalar ) {
+				 		           T               scalar ) {
 		this->m_x = vec.GetXComponent();
 		this->m_y = vec.GetYComponent();
 		this->m_z = vec.GetZComponent();
