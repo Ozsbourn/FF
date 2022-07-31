@@ -24,12 +24,12 @@ namespace FF {
     // Common math methods
 
     /**
-     * @brief [Method that calculate abs of numbers of generic types]
+     * @brief   [Method that calculate abs of numbers of generic types]
      * @details [-]
      * 
      * @param value [Number]
-     * @tparam T [Generic type]
-     * @return [Return absolute value of parameter]
+     * @tparam T    [Generic type]
+     * @return      [Return absolute value of parameter]
      */
     template<typename T>
     inline const T abs(const T value){
@@ -38,11 +38,11 @@ namespace FF {
     }
 
     /**
-     * @brief [Method that calculate abs of numbers of float types]
+     * @brief   [Method that calculate abs of numbers of float types]
      * @details [Specify abs to float type]
      * 
      * @param value [Number (float type)]
-     * @return [Return absolute value of parameter]
+     * @return      [Return absolute value of parameter]
      */
     template<>
     inline const float abs<float>(const float value){
@@ -50,11 +50,11 @@ namespace FF {
     }
 
     /**
-     * @brief [Method that calculate abs of numbers of double types]
+     * @brief   [Method that calculate abs of numbers of double types]
      * @details [Specify abs to double type]
      * 
      * @param value [Number (double type)]
-     * @return [Return absolute value of parameter]
+     * @return      [Return absolute value of parameter]
      */
     template<>
     inline const double abs<double>(const double value){
@@ -62,12 +62,12 @@ namespace FF {
     }
 
     /**
-     * @brief [Method that calculate square of number]
+     * @brief   [Method that calculate square of number]
      * @details [-]
      * 
      * @param scalar [Number]
-     * @tparam T [Generic type]
-     * @return [Return square root of value got in parameters]
+     * @tparam T     [Generic type]
+     * @return       [Return square root of value got in parameters]
      */
     template<typename T>
     inline T sqr(const T& scalar){
@@ -75,27 +75,12 @@ namespace FF {
     }
 
     /**
-     * @brief [Method for calculate fast square root]
-     * @details [Defined for double type]
-     * 
-     * @param scalar [Number]
-     * @return [Return square root]
-     */
-    inline __attribute__((fastcall)) double& fa_sqrt(const double& scalar){
-        asm (
-            "fld qword ptr [esp + 0x4]"
-            "fsqrt" 
-            "ret 0x8"
-        );
-    }
-
-    /**
-     * @brief [Method that translate radian to degrees]
+     * @brief   [Method that translate radian to degrees]
      * @details [-]
      * 
      * @param radian [Radian value]
-     * @tparam T [Generic type]
-     * @return [Return value of degrees that equal to radians got in parameters]
+     * @tparam T     [Generic type]
+     * @return       [Return value of degrees that equal to radians got in parameters]
      */
     template<typename T>
     inline const T radian_to_degree(const T& radian){
@@ -103,11 +88,11 @@ namespace FF {
     }
 
     /**
-     * @brief [Method that translate radian to degrees]
+     * @brief   [Method that translate radian to degrees]
      * @details [Specify to float]
      * 
      * @param radian [Radian value]
-     * @return [Return value of degrees that equal to radians got in parameters]
+     * @return       [Return value of degrees that equal to radians got in parameters]
      */
     template<>
     inline const float radian_to_degree(const float& radian){
@@ -115,11 +100,11 @@ namespace FF {
     }
 
     /**
-     * @brief [Method that translate radian to degrees]
+     * @brief   [Method that translate radian to degrees]
      * @details [Specify to double]
      * 
      * @param radian [Radian value]
-     * @return [Return value of degrees that equal to radians got in parameters]
+     * @return       [Return value of degrees that equal to radians got in parameters]
      */
     template<>
     inline const double radian_to_degree(const double& radian){
@@ -127,12 +112,12 @@ namespace FF {
     }
 
     /**
-     * @brief [Method that translate degrees to radians]
+     * @brief   [Method that translate degrees to radians]
      * @details [-]
      * 
      * @param radian [Degree value]
-     * @tparam T [Generic type]
-     * @return [Return value of radians that equal to degrees got in parameters]
+     * @tparam T     [Generic type]
+     * @return       [Return value of radians that equal to degrees got in parameters]
      */
     template<typename T>
     inline const T degree_to_radian(const T& degree){
@@ -140,11 +125,11 @@ namespace FF {
     }
 
     /**
-     * @brief [Method that translate degrees to radians]
+     * @brief   [Method that translate degrees to radians]
      * @details [Specify to float]
      * 
      * @param radian [Degree value]
-     * @return [Return value of radians that equal to degrees got in parameters]
+     * @return       [Return value of radians that equal to degrees got in parameters]
      */
     template<>
     inline const float degree_to_radian(const float& degree){
@@ -152,11 +137,11 @@ namespace FF {
     }
 
     /**
-     * @brief [Method that translate degrees to radians]
+     * @brief   [Method that translate degrees to radians]
      * @details [Specify to double]
      * 
      * @param radian [Degree value]
-     * @return [Return value of radians that equal to degrees got in parameters]
+     * @return       [Return value of radians that equal to degrees got in parameters]
      */
     template<>
     inline const double degree_to_radian(const double& degree){
@@ -164,13 +149,13 @@ namespace FF {
     }
 
     /**
-     * @brief [Method that find max in two numbers]
+     * @brief   [Method that find max in two numbers]
      * @details [-]
      * 
-     * @param first [First number]
+     * @param first  [First number]
      * @param second [Second number]
-     * @tparam T [Generic type]
-     * @return [Return max of two numbers]
+     * @tparam T     [Generic type]
+     * @return       [Return max of two numbers]
      */
     template<typename T>
     inline const T max(const T& first, const T& second){
@@ -178,13 +163,13 @@ namespace FF {
     }
         
     /**
-     * @brief [Method that find min in two numbers]
+     * @brief   [Method that find min in two numbers]
      * @details [-]
      * 
-     * @param first [First number]
+     * @param first  [First number]
      * @param second [Second number]
-     * @tparam T [Generic type]
-     * @return [Return min of two numbers]
+     * @tparam T     [Generic type]
+     * @return       [Return min of two numbers]
      */
     template<typename T>
     inline const T  min(const T& first, const T& second){
@@ -192,14 +177,14 @@ namespace FF {
     }
 
     /**
-     * @brief [Method that check that two parameters are equal]
+     * @brief   [Method that check that two parameters are equal]
      * @details [-]
      * 
-     * @param first [First number]
+     * @param first  [First number]
      * @param second [Second number]
-     * @tparam T [Generic type]
+     * @tparam T     [Generic type]
      * 
-     * @return [Return true if two values are equal and false in another case]
+     * @return       [Return true if two values are equal and false in another case]
      */
     template<typename T>
     inline const bool isEqual(const T& first, const T& second){
@@ -207,13 +192,13 @@ namespace FF {
     }
 
     /**
-     * @brief [Method that check that two parameters are equal]
+     * @brief   [Method that check that two parameters are equal]
      * @details [Specify to float]
      * 
-     * @param first [First number]
+     * @param first  [First number]
      * @param second [Second number]
      * 
-     * @return [Return true if two values are equal and false in another case]
+     * @return       [Return true if two values are equal and false in another case]
      */
     template<>
     inline const bool isEqual<float>(const  float&  first, const float&  second){
@@ -221,13 +206,13 @@ namespace FF {
     }
 
     /**
-     * @brief [Method that check that two parameters are equal]
+     * @brief   [Method that check that two parameters are equal]
      * @details [Specify to double]
      * 
-     * @param first [First number]
+     * @param first  [First number]
      * @param second [Second number]
      * 
-     * @return [Return true if two values are equal and false in another case]
+     * @return       [Return true if two values are equal and false in another case]
      */
     template<>
     inline const bool isEqual<double>(const double& first, const double& second){
@@ -235,13 +220,13 @@ namespace FF {
     }
 
     /**
-     * @brief [Method that check that parameter close to zero or not]
+     * @brief   [Method that check that parameter close to zero or not]
      * @details [-]
      * 
      * @param value [Value]
-     * @tparam T [Generic type]
+     * @tparam T    [Generic type]
      * 
-     * @return [Return true if value close to zero or not in another case]
+     * @return      [Return true if value close to zero or not in another case]
      */
     template<typename T>
     inline const bool CloseToZero(const T value){
@@ -249,12 +234,12 @@ namespace FF {
     }
 
     /**
-     * @brief [Method that check that parameter close to zero or not]
+     * @brief   [Method that check that parameter close to zero or not]
      * @details [Specify to float]
      * 
      * @param value [Value]
      * 
-     * @return [Return true if value close to zero or not in another case]
+     * @return      [Return true if value close to zero or not in another case]
      */
     template<>
     inline const bool CloseToZero<float>(const float value){
@@ -262,12 +247,12 @@ namespace FF {
     }
 
     /**
-     * @brief [Method that check that parameter close to zero or not]
+     * @brief   [Method that check that parameter close to zero or not]
      * @details [Specify to double]
      * 
      * @param value [Value]
      * 
-     * @return [Return true if value close to zero or not in another case]
+     * @return      [Return true if value close to zero or not in another case]
      */
     template<>
     inline const bool CloseToZero<double>(const double value){
@@ -275,16 +260,16 @@ namespace FF {
     }
 
     /**
-     * @brief [Method that find clamp in three numbers]
+     * @brief   [Method that find clamp in three numbers]
      * @details [-]
      * 
-     * @param first [First number]
+     * @param first  [First number]
      * @param second [Second number]
-     * @param third [Third number]
+     * @param third  [Third number]
      * 
-     * @tparam T [Generic type]
+     * @tparam T     [Generic type]
      * 
-     * @return [Return not max and not min value]
+     * @return       [Return not max and not min value]
      */
     template<typename T>
     inline const T clamp(T& first, T& second, T& third){
