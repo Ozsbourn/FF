@@ -9,7 +9,7 @@
 
 namespace FF {
     /**
-     * @brief [Class that represent three-dimensional vector]
+     * @brief   [Class that represent three-dimensional vector]
      * @details [Three-dimensional vector have a two components, that describe X, Y and Z components,
      *            and is used to describe something in 3D spaces]
      * 
@@ -34,9 +34,9 @@ namespace FF {
          * @param x [X component]
          * @param y [Y component]
          */
-        explicit Vector3( T __FF_IN x = static_cast<T>(0.0f), 
-                          T __FF_IN y = static_cast<T>(0.0f),
-                          T __FF_IN z = static_cast<T>(0.0f) )
+        explicit Vector3( const T __FF_IN x = static_cast<T>(0.0f), 
+                          const T __FF_IN y = static_cast<T>(0.0f),
+                          const T __FF_IN z = static_cast<T>(0.0f) )
         : m_x(x), m_y(y), m_z(z) {};
 
 
@@ -49,26 +49,36 @@ namespace FF {
         explicit Vector3(FF::Vector3<T>& __FF_IN vec);
 
 
+
         /**
          * @brief [Method that set X component of vector]
          * 
          * @param x [Value of X component]
          */
-        inline void SetXComponent(T __FF_IN x);
+        inline void SetXComponent(const T __FF_IN x) noexcept;
         
         /**
          * @brief [Method that set Y component of vector]
          * 
          * @param x [Value of Y component]
          */
-        inline void SetYComponent(T __FF_IN y);
+        inline void SetYComponent(const T __FF_IN y) noexcept;
         
         /**
          * @brief [Method that set Z component of vector]
          * 
          * @param x [Value of Z component]
          */
-        inline void SetZComponent(T __FF_IN z);
+        inline void SetZComponent(const T __FF_IN z) noexcept;
+
+        /**
+         * @brief [Method that set X, Y and Z component]
+         * 
+         * @param x [X component]
+         * @param y [Y component]
+         * @param z [Z component]
+         */
+        inline void SetXYZ(const T __FF_IN x, const T __FF_IN y, const T __FF_IN z) noexcept;
 
 
         /**
@@ -77,7 +87,7 @@ namespace FF {
          * 
          * @param y [Value of X component]
          */
-        const inline T& GetXComponent(void) const;
+        const inline T& GetXComponent(void) const noexcept;
         
         /**
          * @brief [Method that get Z component of vector]
@@ -85,7 +95,7 @@ namespace FF {
          * 
          * @param y [Value of Z component]
          */
-        const inline T& GetYComponent(void) const;
+        const inline T& GetYComponent(void) const noexcept;
         
         /**
          * @brief [Method that get Y component of vector]
@@ -93,7 +103,8 @@ namespace FF {
          * 
          * @param y [Value of Y component]
          */
-        const inline T& GetZComponent(void) const;
+        const inline T& GetZComponent(void) const noexcept;
+
 
 
         /**
@@ -153,13 +164,14 @@ namespace FF {
         friend Vector3<U> operator/(const FF::Vector3<U>& __FF_IN vec,  const U& __FF_IN scalar);
 
         
+
         /**
          * @brief [Operator that calculate difference of this vector and scalar]
          * @details [-]
          * 
          * @param scalar [Scalar value]
          */
-        inline void operator-=(const T& __FF_IN scalar);
+        inline void operator-=(const T& __FF_IN scalar) noexcept;
 
         /**
          * @brief [Operator that calculate sum of this vector and scalar]
@@ -167,7 +179,7 @@ namespace FF {
          * 
          * @param scalar [Scalar value]
          */
-        inline void operator+=(const T& __FF_IN scalar);
+        inline void operator+=(const T& __FF_IN scalar) noexcept;
 
         /**
          * @brief [Operator that calculate mul of this vector and scalar]
@@ -175,7 +187,7 @@ namespace FF {
          * 
          * @param scalar [Scalar value]
          */
-        inline void operator*=(const T& __FF_IN scalar);
+        inline void operator*=(const T& __FF_IN scalar) noexcept;
 
         /**
          * @brief [Operator that calculate div of this vector and scalar]
@@ -185,20 +197,24 @@ namespace FF {
          */
         inline void operator/=(const T& __FF_IN scalar);
 
+
+
         /**
          * @brief [Operator that calculate dif with this vector and parameter vector]
          * @details [-]
          * 
          * @param vec [Vector]
          */
-        inline void operator-=(const FF::Vector3<T>& __FF_IN vec);
+        inline void operator-=(const FF::Vector3<T>& __FF_IN vec) noexcept;
+
         /**
          * @brief [Operator that calculate sum with this vector and parameter vector]
          * @details [-]
          * 
          * @param vec [Vector]
          */
-        inline void operator+=(const FF::Vector3<T>& __FF_IN vec);
+        inline void operator+=(const FF::Vector3<T>& __FF_IN vec) noexcept;
+
 
 
         /**
@@ -211,9 +227,21 @@ namespace FF {
         const T& operator[](std::size_t __FF_IN index);
 
 
+
         /**
          * @brief [Friend function that calculate dot product of two vectors]
-         * @details [Dot product is sum of all mul appropriate components]
+         * @details [Dot product is sum of all mul appropriate components. Member function]
+         * 
+         * @param this [This vector]
+         * @param vec [Another vector]
+         * @tparam U [Generic type]
+         * @return [Return value that represent result of dot product]
+         */
+        inline T                     DotProduct(const FF::Vector3<T>& __FF_IN vec) const noexcept;
+
+        /**
+         * @brief [Friend function that calculate dot product of two vectors]
+         * @details [Dot product is sum of all mul appropriate components. Friend function]
          * 
          * @param vec1 [First vector]
          * @param vec2 [Second vector]
@@ -221,7 +249,20 @@ namespace FF {
          * @return [Return value that represent result of dot product]
          */
         template<typename U>
-        friend inline U               DotProduct(const FF::Vector3<U>& __FF_IN vec1, const FF::Vector3<U>& __FF_IN vec2);
+        friend inline U              DotProduct(const FF::Vector3<U>& __FF_IN vec1, const FF::Vector3<U>& __FF_IN vec2);
+
+        /**
+         * @brief [Friend function that calculate cross product of two vectors]
+         * @details [Cross product for 3D vecs is 3D vec with components (this.y * vec.z - this.z * vec.y; 
+         *                                                                  - this.x * vec.z + this.z * vec.x;
+         *                                                                      this.x * vec.y - this.y * vec.x)]
+         * 
+         * @param this [This vector]
+         * @param vec  [Another vector]
+         * @tparam U   [Generic type]
+         * @return     [Return value that represent result of cross product]
+         */
+        inline FF::Vector3<T>        CrossProduct(const FF::Vector3<T>& __FF_IN vec) const noexcept;
 
         /**
          * @brief [Friend function that calculate cross product of two vectors]
@@ -235,7 +276,7 @@ namespace FF {
          * @return [Return value that represent result of cross product]
          */
         template<typename U>
-        friend inline FF::Vector3<U>& CrossProduct(const FF::Vector3<U>& __FF_IN vec1, const FF::Vector3<U>& __FF_IN vec2);
+        friend inline FF::Vector3<U> CrossProduct(const FF::Vector3<U>& __FF_IN vec1, const FF::Vector3<U>& __FF_IN vec2);
 
         
         /**
@@ -262,68 +303,127 @@ namespace FF {
         template<typename U>
         friend inline FF::Vector3<U>& Reject(const FF::Vector3<U>& __FF_IN vec1,  const FF::Vector3<U>& __FF_IN vec2);
 
+        
+
         /**
-         * @brief [Friend function that calculate distance detween two vectors]
-         * @details [Distance is sqrt((x1 - x2)^2 + (y1 - y2)^2 + (z1 - z2)^2)]
+         * @brief   [Friend function that calculate distance detween two vectors]
+         * @details [Distance is sqrt((x1 - x2)^2 + (y1 - y2)^2 + (z1 - z2)^2). Member function]
+         * 
+         * @param this [This vector]
+         * @param vec  [Another vector]
+         * @tparam U   [Generic type]
+         * @return     [Return distance between this and parameter vectors]
+         */
+        inline T                      Distance(const FF::Vector3<T>& __FF_IN vec) const noexcept;
+
+        /**
+         * @brief   [Friend function that calculate distance detween two vectors]
+         * @details [Distance is sqrt((x1 - x2)^2 + (y1 - y2)^2 + (z1 - z2)^2). Friend function]
          * 
          * @param vec1 [First vector]
          * @param vec2 [Second vector]
-         * @tparam U [Generic type]
-         * @return [Return distance between two vectors]
+         * @tparam U   [Generic type]
+         * @return     [Return distance between this and parameter vectors]
          */
         template<typename U>
         friend inline U               Distance(const FF::Vector3<U>& __FF_IN vec1, const FF::Vector3<U>& __FF_IN vec2);
 
         /**
-         * @brief [Friend function that calculate squared distance detween two vectors]
-         * @details [Squared distance is (x1 - x2)^2 + (y1 - y2)^2 + (z1 - z2)^2]
+         * @brief   [Friend function that calculate squared distance detween two vectors]
+         * @details [Squared distance is (x1 - x2)^2 + (y1 - y2)^2 + (z1 - z2)^2. Member function]
+         * 
+         * @param this [This vector]
+         * @param vec  [Another vector]
+         * @tparam U   [Generic type]
+         * @return     [Return squared distance between this and parameter vectors]
+         */
+        inline T                      SquaredDistance(const FF::Vector3<T>& __FF_IN vec) const noexcept;
+
+        /**
+         * @brief   [Friend function that calculate squared distance detween two vectors]
+         * @details [Squared distance is (x1 - x2)^2 + (y1 - y2)^2 + (z1 - z2)^2. Friend function]
          * 
          * @param vec1 [First vector]
          * @param vec2 [Second vector]
-         * @tparam U [Generic type]
-         * @return [Return squared distance between two vectors]
+         * @tparam U   [Generic type]
+         * @return     [Return squared distance between this and parameter vectors]
          */
         template<typename U>
         friend inline U               SquaredDistance(const FF::Vector3<U>& __FF_IN vec1, const FF::Vector3<U>& __FF_IN vec2);
         
+
+
         /**
-         * @brief [Method that calculate magnitude of vector]
+         * @brief   [Method that calculate magnitude of vector]
+         * @details [Method find and return square root of sum of squares of each component of vector. Member function]
+         * 
+         * @tparam T  [Generic type]
+         * @return    [Return the magnitude of this vector]
+         */
+        inline T                      Magnitude(void) const noexcept;
+
+        /**
+         * @brief   [Method that calculate magnitude of vector]
          * @details [Method find and return square root of sum of squares of each component of vector]
          * 
          * @param vec [Vector]
-         * @tparam T [Generic type]
-         * @return [Return the magnitude of vector]
+         * @tparam U  [Generic type]
+         * @return    [Return the magnitude of parameter vector]
          */
         template<typename U>
         friend inline U               Magnitude(const FF::Vector3<U>& __FF_IN vec);
        
+
+
         /**
-         * @brief [Method that find square of magnitude of vector]
-         * @details [Method find and return sum of squares of each component of vector]
+         * @brief   [Method that find square of magnitude of vector]
+         * @details [Method find and return sum of squares of each component of vector. Member function]
+         * 
+         * @tparam T  [Generic type]
+         * @return    [Return sqaured magnitude of this vector]
+         */
+        inline T                      SquaredMagnitude(void) const noexcept;
+
+        /**
+         * @brief   [Method that find square of magnitude of vector]
+         * @details [Method find and return sum of squares of each component of vector. Friend function]
          * 
          * @param vec [Vector]
-         * @tparam T [Generic type]
-         * @return [Return sqaured magnitude of vector]
+         * @tparam U  [Generic type]
+         * @return    [Return sqaured magnitude of parameter vector]
          */
         template<typename U>
         friend inline U               SquaredMagnitude(const FF::Vector3<U>& __FF_IN vec);
         
+
+
+        /**
+         * @brief   [Method that that instance this vector after normalize]
+         * @details [Method normalize a vector: subdivide each component on magnitude of this vector. Member function]
+         *
+         * @tparam T  [Generic type]
+         * @return    [Return the copy of this vector that was normalize]
+         */
+        inline FF::Vector3<T>         Normalize(void) const;
+
         /**
          * @brief [Method that that instance the origin vector after normalize]
-         * @details [Method normalize a vector: subdivide each component on magnitude of this vector]
+         * @details [Method normalize a vector: subdivide each component on magnitude of this vector. Friend function]
          * 
          * @param vec [Vector]
-         * @tparam T [Generic type]
-         * @return [Return the copy of origin vector that was normalize]
+         * @tparam U  [Generic type]
+         * @return    [Return the copy of parameter vector that was normalize]
          */
         template<typename U>
-        friend inline FF::Vector3<U>& Normalize(const FF::Vector3<U>& __FF_IN vec);
+        friend inline FF::Vector3<U>  Normalize(const FF::Vector3<U>& __FF_IN vec);
+
 
 
         /**
          * @brief [Default destructor]
          */
         ~Vector3(void) = default;
+
 
 
         /**
@@ -345,32 +445,39 @@ namespace FF {
     }
 
     template<typename T>
-    inline void FF::Vector3<T>::SetXComponent(T __FF_IN x) {
+    inline void FF::Vector3<T>::SetXComponent(const T __FF_IN x) noexcept {
         this->m_x = x;
     }
 
     template<typename T>
-    inline void FF::Vector3<T>::SetYComponent(T __FF_IN y) {
+    inline void FF::Vector3<T>::SetYComponent(const T __FF_IN y) noexcept {
         this->m_y = y;
     }
 
     template<typename T>
-    inline void FF::Vector3<T>::SetZComponent(T __FF_IN z) {
+    inline void FF::Vector3<T>::SetZComponent(const T __FF_IN z) noexcept {
         this->m_z = z;
     }
 
     template<typename T>
-    const inline T& FF::Vector3<T>::GetXComponent(void) const {
+    inline void FF::Vector3<T>::SetXYZ(const T __FF_IN x, const T __FF_IN y, const T __FF_IN z) noexcept {
+        this->m_x = x;
+        this->m_y = y;
+        this->m_z = z;
+    }
+
+    template<typename T>
+    const inline T& FF::Vector3<T>::GetXComponent(void) const noexcept {
         return m_x;
     }
 
     template<typename T>
-    const inline T& FF::Vector3<T>::GetYComponent(void) const {
+    const inline T& FF::Vector3<T>::GetYComponent(void) const noexcept {
         return m_y;
     }
 
     template<typename T>
-    const inline T& FF::Vector3<T>::GetZComponent(void) const {
+    const inline T& FF::Vector3<T>::GetZComponent(void) const noexcept {
         return m_z;
     }
 
@@ -410,21 +517,21 @@ namespace FF {
     }
 
     template<typename T>
-    inline void FF::Vector3<T>::operator-=(const T& __FF_IN scalar){
+    inline void FF::Vector3<T>::operator-=(const T& __FF_IN scalar) noexcept {
         this->m_x -= scalar;
         this->m_y -= scalar;
         this->m_z -= scalar;
     }
 
     template<typename T>
-    inline void FF::Vector3<T>::operator+=(const T& __FF_IN scalar){
+    inline void FF::Vector3<T>::operator+=(const T& __FF_IN scalar) noexcept {
         this->m_x += scalar;
         this->m_y += scalar;
         this->m_z += scalar;
     }
 
     template<typename T>
-    inline void FF::Vector3<T>::operator*=(const T& __FF_IN scalar){
+    inline void FF::Vector3<T>::operator*=(const T& __FF_IN scalar) noexcept {
         this->m_x *= scalar;
         this->m_y *= scalar;
         this->m_y *= scalar;
@@ -432,23 +539,25 @@ namespace FF {
 
     template<typename T>
     inline void FF::Vector3<T>::operator/=(const T& __FF_IN scalar){
+        FF_ASSERT_MESSAGE(!FF::CloseToZero(scalar), "Scalar is 0x0 value. Divide by zero!"); 
+
         this->m_x /= scalar;
         this->m_y /= scalar;
         this->m_y /= scalar;
     }
 
     template<typename T>
-    inline void FF::Vector3<T>::operator-=(const FF::Vector3<T>& __FF_IN vec){
-        this->m_x -= vec.GetXComponent();
-        this->m_y -= vec.GetYComponent();
-        this->m_z -= vec.GetZComponent();
+    inline void FF::Vector3<T>::operator-=(const FF::Vector3<T>& __FF_IN vec) noexcept {
+        this->m_x -= vec.m_x;
+        this->m_y -= vec.m_y;
+        this->m_z -= vec.m_z;
     }
 
     template<typename T>
-    inline void FF::Vector3<T>::operator+=(const FF::Vector3<T>& __FF_IN vec){
-        this->m_x += vec.GetXComponent();
-        this->m_y += vec.GetYComponent();
-        this->m_z += vec.GetZComponent();
+    inline void FF::Vector3<T>::operator+=(const FF::Vector3<T>& __FF_IN vec) noexcept {
+        this->m_x += vec.m_x;
+        this->m_y += vec.m_y;
+        this->m_z += vec.m_z;
     }
 
     template<typename T>
@@ -458,15 +567,27 @@ namespace FF {
     }
 
     template<typename T>
+    inline T FF::Vector3<T>::DotProduct(const FF::Vector3<T>& __FF_IN vec) const noexcept {
+        return (this->m_x * vec.m_x + this->m_y * vec.m_y + this->m_z * vec.m_z);
+    }
+
+    template<typename T>
     inline T DotProduct(const FF::Vector3<T>& __FF_IN vec1, const FF::Vector3<T>& __FF_IN vec2){
         return (vec1.m_x * vec2.m_x + vec1.m_y * vec2.m_y + vec1.m_z * vec2.m_z);
     }
 
     template<typename T>
-    inline FF::Vector3<T>& CrossProduct(const FF::Vector3<T>& __FF_IN vec1, const FF::Vector3<T>& __FF_IN vec2){
-        return FF::Vector3<T>( vec1.GetYComponent() * vec2.GetZComponent() - vec1.GetZComponent() * vec2.GetYComponent(),
-                               vec1.GetZComponent() * vec2.GetXComponent() - vec1.GetXComponent() * vec2.GetZComponent(),
-                               vec1.GetXComponent() * vec2.GetYComponent() - vec1.GetYComponent() * vec2.GetXComponent() );
+    inline FF::Vector3<T> FF::Vector3<T>::CrossProduct(const FF::Vector3<T>& __FF_IN vec) const noexcept {
+        return FF::Vector3<T>( this->m_y * vec.m_z - this->m_z * vec.m_y,
+                               this->m_z * vec.m_x - this->m_x * vec.m_z,
+                               this->m_x * vec.m_y - this->m_y * vec.m_x );
+    }
+
+    template<typename T>
+    inline FF::Vector3<T> CrossProduct(const FF::Vector3<T>& __FF_IN vec1, const FF::Vector3<T>& __FF_IN vec2){
+        return FF::Vector3<T>( vec1.m_y * vec2.m_z - vec1.m_z * vec2.m_y,
+                               vec1.m_z * vec2.m_x - vec1.m_x * vec2.m_z,
+                               vec1.m_x * vec2.m_y - vec1.m_y * vec2.m_x );
     }
 
     template<typename T>
@@ -480,17 +601,38 @@ namespace FF {
     }
 
     template<typename T>
+    inline T FF::Vector3<T>::Distance(const FF::Vector3<T>& __FF_IN vec) const noexcept {
+        return sqrt( FF::sqr(this->m_x - vec.m_x) +
+                     FF::sqr(this->m_y - vec.m_y) +
+                     FF::sqr(this->m_z - vec.m_z) ); 
+    }
+
+    template<typename T>
     inline T Distance(const FF::Vector3<T>& __FF_IN vec1, const FF::Vector3<T>& __FF_IN vec2){
-        return sqrt( FF::sqr(vec1.GetXComponent() - vec2.GetXComponent()) +
-                     FF::sqr(vec1.GetYComponent() - vec2.GetYComponent()) +
-                     FF::sqr(vec1.GetZComponent() - vec2.GetZComponent()) );
+        return sqrt( FF::sqr(vec1.m_x - vec2.m_x) +
+                     FF::sqr(vec1.m_y - vec2.m_y) +
+                     FF::sqr(vec1.m_z - vec2.m_z) );
+    }
+
+    template<typename T>
+    inline T FF::Vector3<T>::SquaredDistance(const FF::Vector3<T>& __FF_IN vec) const noexcept {
+        return ( FF::sqr(this->m_x - vec.m_x) +
+                 FF::sqr(this->m_y - vec.m_y) +
+                 FF::sqr(this->m_z - vec.m_z) );
     }
 
     template<typename T>
     inline T SquaredDistance(const FF::Vector3<T>& __FF_IN vec1, const FF::Vector3<T>& __FF_IN vec2){
-        return ( FF::sqr(vec1.GetXComponent() - vec2.GetXComponent()) +
-                 FF::sqr(vec1.GetYComponent() - vec2.GetYComponent()) +
-                 FF::sqr(vec1.GetZComponent() - vec2.GetZComponent()) );
+        return ( FF::sqr(vec1.m_x - vec2.m_x) +
+                 FF::sqr(vec1.m_y - vec2.m_y) +
+                 FF::sqr(vec1.m_z - vec2.m_z) );
+    }
+
+    template<typename T>
+    inline T FF::Vector3<T>::Magnitude(void) const noexcept {
+        return sqrt( FF::sqr(this->m_x) + 
+                     FF::sqr(this->m_y) + 
+                     FF::sqr(this->m_z) );
     }
 
     template<typename T>
@@ -501,6 +643,13 @@ namespace FF {
     }
 
     template<typename T>
+    inline T FF::Vector3<T>::SquaredMagnitude(void) const noexcept {
+        return ( FF::sqr(this->m_x) + 
+                 FF::sqr(this->m_y) + 
+                 FF::sqr(this->m_z) );
+    }
+
+    template<typename T>
     inline T SquaredMagnitude(const Vector3<T>& __FF_IN vec){
         return ( FF::sqr(vec.m_x) + 
                  FF::sqr(vec.m_y) + 
@@ -508,8 +657,13 @@ namespace FF {
     }
 
     template<typename T>
-    inline FF::Vector3<T>& Normalize(const FF::Vector3<T>& __FF_IN vec){
-        return (vec / Magnitude(vec));
+    inline FF::Vector3<T> FF::Vector3<T>::Normalize(void) const {
+        return ((*this) / this->Magnitude());
+    }
+
+    template<typename T>
+    inline FF::Vector3<T> Normalize(const FF::Vector3<T>& __FF_IN vec){
+        return (vec / FF::Magnitude(vec));
     }
 
     template<typename T>
